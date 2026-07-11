@@ -10,13 +10,19 @@ import connectToMongoDB from "./db/connectToMongoDB.js";
 import { app, server } from "./socket/socket.js";
 
 import path from "path";
+import cors from "cors";
+
+dotenv.config();
+
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}));
 
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
-dotenv.config();
-
-app.use(express.json()); // for parsing incoming requests with JSON payloads (from req.body)
+app.use(express.json()); 
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
