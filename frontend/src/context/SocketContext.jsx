@@ -12,11 +12,15 @@ export const SocketContextProvider = ({children}) => {
 
     useEffect(() => {
         if (authUser) {
-            const socket = io(import.meta.env.MODE === "development" ? "http://localhost:5000" : "/", {
-                query:{
-                    userId: authUser._id
-                }
-            });
+           const socket = io(
+    import.meta.env.VITE_API_URL.replace("/api", ""),
+    {
+        query: {
+            userId: authUser._id
+        },
+        withCredentials: true,
+    }
+);
 
             setSocket(socket);
 
